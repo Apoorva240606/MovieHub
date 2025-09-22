@@ -72,7 +72,7 @@ export default function MovieDetails() {
       <div className="bg-gray-800 shadow rounded-lg p-6">
         <h1 className="text-3xl font-bold mb-2 text-white">{movie.title}</h1>
         <p className="text-gray-400 font-semibold mb-2">{movie.description}</p>
-        <p className="text-gray-500 text-sm mb-4">Added by: {movie.name}</p>
+        <p className="text-gray-500 text-sm mb-4">@{movie.added_by_name}</p>
         <VoteButtons movie={movie} initialVotes={movie.vote_count} />
       </div>
 
