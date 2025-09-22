@@ -14,7 +14,7 @@ export const signup = asyncHandler(async (req, res) => {
 
     const passwordHash = await bcrypt.hash(password, 10);
     const result = await pool.query(
-      `INSERT INTO users (name, email, password_hash, role)
+      `INSERT INTO users (name, email, password, role)
        VALUES ($1, $2, $3, $4) RETURNING id, name, email, role`,
       [name, email, passwordHash, "user"]
     );
@@ -33,9 +33,9 @@ export const login = asyncHandler(async (req, res) => {
     const user = result.rows[0];
     if (!user) return res.status(400).json({ message: "Invalid credentials" });
     console.log("Password:", password);
-    console.log("Hash from DB:", user.password_hash);
+    console.log("Hash from DB:", user.password);
 
-    const isMatch = await bcrypt.compare(password, user.password_hash);
+    const isMatch = await bcrypt.compare(password, user.password);
     
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
     console.log("isMatch:", isMatch);
