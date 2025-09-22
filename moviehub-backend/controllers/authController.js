@@ -10,7 +10,7 @@ export const signup = asyncHandler(async (req, res) => {
     try {
     const { name, email, password } = req.body;
     const existing = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
-        console.log(existing.row[0])
+        console.log(existing)
     if (existing.rows.length > 0) return res.status(400).json({ message: "Email already exists" });
 console.log("hello")
     const passwordHash = await bcrypt.hash(password, 10);
