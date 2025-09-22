@@ -25,7 +25,7 @@ export default function MovieCard({ movie, fetchMovies }) {
             ? movie.description.substring(0, 100) + "..."
             : movie.description}
         </p>
-        <p className="text-gray-400 text-sm mb-2">@{movie.name}</p>
+        <p className="text-gray-400 text-sm mb-2">@{movie.added_by_name}</p>
       </Link>
 
       <div className="flex items-center justify-between mt-2">
