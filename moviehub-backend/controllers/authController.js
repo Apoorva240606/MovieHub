@@ -10,14 +10,16 @@ export const signup = asyncHandler(async (req, res) => {
     try {
     const { name, email, password } = req.body;
     const existing = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
+        console.log(existing.row[0])
     if (existing.rows.length > 0) return res.status(400).json({ message: "Email already exists" });
-
+console.log("hello")
     const passwordHash = await bcrypt.hash(password, 10);
     const result = await pool.query(
       `INSERT INTO users (name, email, password, role)
        VALUES ($1, $2, $3, $4) RETURNING id, name, email, role`,
       [name, email, passwordHash, "user"]
     );
+console.log("hello2")
 
     res.status(201).json({ message: "User created", user: result.rows[0] });
   } catch (err) {
@@ -31,6 +33,7 @@ export const login = asyncHandler(async (req, res) => {
       const { email, password } = req.body;
     const result = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
     const user = result.rows[0];
+console.log("hello3",user)
     if (!user) return res.status(400).json({ message: "Invalid credentials" });
     console.log("Password:", password);
     console.log("Hash from DB:", user.password);
